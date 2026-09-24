@@ -338,6 +338,12 @@ details.review summary { cursor: pointer; font-weight: 600; }
 .r-subj { font-weight: 700; }
 .r-room { font-family: var(--font-mono); font-size: 0.9rem; }
 .r-move { font-size: 0.9rem; color: var(--text-2); }
+.r-teacher { font-size: 0.9rem; }
+.my-day { border-color: var(--lilac); }
+.day-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.day-table th, .day-table td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
+.day-table th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-2); font-weight: 600; }
+.day-table td.mono { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .r-flags { display: flex; flex-direction: column; gap: var(--s1); align-items: flex-end; }
 
 /* ---------- Клубы и менторы ---------- */

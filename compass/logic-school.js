@@ -84,6 +84,19 @@ function lessonsFor(cls, day) {
   return base.map((_, i) => base[(i + shift) % base.length]);
 }
 
+// Учитель предмета для класса: 7A и 7B -> первый, 7C и 7D -> второй
+function teacherFor(cls, subject) {
+  const list = TEACHERS[subject] || [];
+  return list[CLASSES.indexOf(cls) < 2 ? 0 : 1] || '';
+}
+
+// Ближайший учебный день: сегодня, если будни; иначе понедельник
+function nextSchoolDay(date) {
+  let d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  while (weekday(d) > 4) d = addDays(d, 1);
+  return d;
+}
+
 // Маршрут: для каждого урока считаем переход от предыдущего кабинета.
 // Далёкий переход = разница 2 этажа и больше (за 10 минут перемены это тяжело).
 function buildRoute(cls, day) {
@@ -105,7 +118,7 @@ function buildRoute(cls, day) {
     if (isFar && prev) far += 1;
     prev = s;
     return {
-      n: i + 1, subject: key, room: s.room, floor: s.floor,
+      n: i + 1, subject: key, room: s.room, floor: s.floor, teacher: teacherFor(cls, key),
       start: BELLS[i][0], end: BELLS[i][1],
       move, floorsDiff: Math.abs(diff), far: isFar && i > 0, gym, first: i === 0
     };
@@ -352,7 +365,7 @@ function buildWeekPlan(input) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     toMin, fmtMin, sleepHours, addDays, weekday, fmtDate,
-    validateProfile, lessonsFor, buildRoute, recommendClubs, checkActivityAdd,
+    validateProfile, lessonsFor, teacherFor, nextSchoolDay, buildRoute, recommendClubs, checkActivityAdd,
     matchMentors, buildWeekPlan
   };
 }

@@ -83,3 +83,13 @@ test('Планер: при коротком сне предлагает врем
   assert.strictEqual(plan.sleep.ok, false);
   assert.strictEqual(plan.sleep.suggestBed, '22:30');
 });
+
+test('Автоподстановка: по классу сразу известны учителя, куратор и ближайший учебный день', () => {
+  assert.strictEqual(S.teacherFor('7B', 'math'), 'Айгуль Сериковна');
+  assert.strictEqual(S.teacherFor('7C', 'math'), 'Ержан Болатович');
+  assert.strictEqual(CURATORS['7B'], 'Жанна Сериковна');
+  const r = S.buildRoute('7B', 0);
+  assert.ok(r.steps.every((s) => s.teacher.length > 0));
+  assert.strictEqual(S.weekday(S.nextSchoolDay(new Date(2026, 8, 26))), 0); // суббота -> понедельник
+  assert.strictEqual(S.nextSchoolDay(new Date(2026, 8, 24)).getDate(), 24);  // четверг -> сегодня
+});

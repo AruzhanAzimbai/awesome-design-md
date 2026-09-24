@@ -38,6 +38,23 @@ const SUBJECTS = {
   pe: { ru: 'Физкультура', kz: 'Дене шынықтыру', room: 'Спортзал', floor: 1, gym: true }
 };
 
+// Учителя (вымышленные). Индекс 0: для 7A и 7B, индекс 1: для 7C и 7D.
+const TEACHERS = {
+  math: ['Айгуль Сериковна', 'Ержан Болатович'],
+  kaz: ['Гульнара Ахметовна', 'Сауле Каировна'],
+  rus: ['Елена Викторовна', 'Динара Маратовна'],
+  eng: ['Ms. Aliya', 'Mr. Daniyar'],
+  phys: ['Нурлан Серикович', 'Асель Муратовна'],
+  chem: ['Жанар Ериковна', 'Бахыт Канатович'],
+  bio: ['Салтанат Нуржановна', 'Мария Олеговна'],
+  geo: ['Арман Бекович', 'Лаура Садыковна'],
+  hist: ['Кайрат Жумабекович', 'Айжан Толегеновна'],
+  it: ['Тимур Асланович', 'Индира Бериковна'],
+  pe: ['Серик Амангельдыевич', 'Бауыржан Ерланович']
+};
+// Кураторы классов (вымышленные)
+const CURATORS = { '7A': 'Меруерт Абаевна', '7B': 'Жанна Сериковна', '7C': 'Руслан Кайратович', '7D': 'Галия Нурлановна' };
+
 // Звонки: 7 уроков по 45 минут
 const BELLS = [
   ['08:30', '09:15'], ['09:25', '10:10'], ['10:20', '11:05'], ['11:25', '12:10'],
@@ -265,7 +282,15 @@ const UI_SCHOOL = {
     meetMentor: 'Встреча с ментором: {name}',
     saDeadline: 'до СОР',
     minutes: 'мин',
-    planNeedProfile: 'Сначала заполни профиль.'
+    planNeedProfile: 'Сначала заполни профиль.',
+    myDayToday: 'Твой день сегодня, {day}',
+    myDayNext: 'Ближайший учебный день: {day}',
+    myDayIntro: 'Расписание, кабинеты и учителя подставлены автоматически по твоему классу.',
+    curator: 'Куратор класса',
+    teacher: 'Учитель',
+    roomCol: 'Кабинет · этаж',
+    timeCol: 'Время',
+    fullRoute: 'Весь маршрут на неделю'
   },
   kz: {
     helloBig: 'Сәлем! Привет!',
@@ -395,7 +420,15 @@ const UI_SCHOOL = {
     meetMentor: 'Ментормен кездесу: {name}',
     saDeadline: 'БЖБ-ға дейін',
     minutes: 'мин',
-    planNeedProfile: 'Алдымен профильді толтыр.'
+    planNeedProfile: 'Алдымен профильді толтыр.',
+    myDayToday: 'Бүгінгі күнің, {day}',
+    myDayNext: 'Жақын оқу күні: {day}',
+    myDayIntro: 'Кесте, кабинеттер және мұғалімдер сыныбыңа қарай автоматты түрде қойылды.',
+    curator: 'Сынып кураторы',
+    teacher: 'Мұғалім',
+    roomCol: 'Кабинет · қабат',
+    timeCol: 'Уақыт',
+    fullRoute: 'Апталық толық бағыт'
   }
 };
 
@@ -404,5 +437,5 @@ Object.assign(UI.ru, UI_SCHOOL.ru);
 Object.assign(UI.kz, UI_SCHOOL.kz);
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { CLASSES, INTERESTS, SUBJECTS, BELLS, BASE_WEEK, DAY_NAMES, DAY_SHORT, ACTIVITIES, MAX_CLUBS, MENTORS, PLANNER, UI_SCHOOL };
+  module.exports = { CLASSES, INTERESTS, SUBJECTS, TEACHERS, CURATORS, BELLS, BASE_WEEK, DAY_NAMES, DAY_SHORT, ACTIVITIES, MAX_CLUBS, MENTORS, PLANNER, UI_SCHOOL };
 }

@@ -261,6 +261,7 @@ function renderHome() {
       h('h2', { id: 'home-h', class: 'hello' }, tf('hello', { name: p.name })),
       h('p', {}, tf('helloSub', { cls: p.cls })),
       h('button', { type: 'button', class: 'link-btn', onclick: () => { state.draft = Object.assign({}, p); go('register'); } }, t('editProfile'))),
+    renderMyDay(),
     h('ol', { class: 'sections' }, SECTIONS.map((s, i) => {
       const st = sectionStatus(s.id);
       const isNext = s.id === next.id;
@@ -273,6 +274,29 @@ function renderHome() {
         h('button', { type: 'button', class: 'btn ' + (isNext ? 'btn-primary' : 'btn-secondary'), onclick: () => go(s.id) }, t('open')));
     }))
   );
+}
+
+// «Твой день»: сразу после регистрации показываем уроки, кабинеты и
+// учителей по классу ученика, без ручного ввода расписания
+function renderMyDay() {
+  const now = new Date();
+  const day = nextSchoolDay(now);
+  const dow = weekday(day);
+  const route = buildRoute(state.profile.cls, dow);
+  const isToday = day.getDate() === now.getDate();
+  const dayName = DAY_NAMES[L()][dow] + ', ' + fmtDate(day);
+  return h('section', { class: 'box stack my-day', 'aria-labelledby': 'myday-h' },
+    h('h3', { id: 'myday-h' }, tf(isToday ? 'myDayToday' : 'myDayNext', { day: dayName })),
+    h('p', { class: 'muted small flush' }, t('myDayIntro')),
+    h('p', { class: 'flush' }, h('b', {}, t('curator') + ': '), CURATORS[state.profile.cls]),
+    h('div', { class: 'table-scroll' }, h('table', { class: 'day-table' },
+      h('thead', {}, h('tr', {}, h('th', {}, t('timeCol')), h('th', {}, t('tLessons')), h('th', {}, t('roomCol')), h('th', {}, t('teacher')))),
+      h('tbody', {}, route.steps.map((s) => h('tr', {},
+        h('td', { class: 'mono' }, s.start),
+        h('td', {}, SUBJECTS[s.subject][L()]),
+        h('td', { class: 'mono' }, (s.gym ? (L() === 'kz' ? 'Спорт зал' : s.room) : s.room) + ' · ' + s.floor),
+        h('td', {}, s.teacher)))))),
+    h('button', { type: 'button', class: 'link-btn', onclick: () => go('route') }, t('fullRoute')));
 }
 
 // ---------------------------------------------------------------------
@@ -519,7 +543,8 @@ function renderRoute() {
         h('span', { class: 'r-time' }, s.start),
         h('div', { class: 'r-body' },
           h('span', { class: 'r-subj' }, SUBJECTS[s.subject][L()]),
-          h('span', { class: 'r-room' }, (s.room === 'Спортзал' && L() === 'kz' ? 'Спорт зал' : s.room) + ' · ' + tf('rFloor', { n: s.floor })),
+          h('span', { class: 'r-room' }, (s.gym && L() === 'kz' ? 'Спорт зал' : s.room) + ' · ' + tf('rFloor', { n: s.floor })),
+          h('span', { class: 'r-teacher' }, s.teacher),
           h('span', { class: 'r-move' }, moveText(s))),
         h('div', { class: 'r-flags' },
           s.far ? chip('attention', t('rFar')) : null,
