@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Компас семиклассника</title>
+<!-- Шрифты с поддержкой казахских букв. Без интернета включатся системные шрифты. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700&family=Unbounded:wght@500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <h1 class="brand"><button type="button" class="brand-btn" id="brand-btn"><span class="brand-mark" aria-hidden="true"></span><span id="app-name"></span></button></h1>
+      <div class="top-tools">
+        <div class="lang" role="group" id="lang-group">
+          <button type="button" id="lang-ru" data-lang="ru">RU</button>
+          <button type="button" id="lang-kz" data-lang="kz">ҚАЗ</button>
+        </div>
+        <button type="button" class="btn-ghost-top" id="reset-btn"></button>
+      </div>
+    </div>
+    <div id="confirm-slot"></div>
+    <nav id="nav" class="nav" aria-label="Разделы"></nav>
+  </div>
+</header>
+
+<main class="wrap" id="main" tabindex="-1"></main>
+
+<footer class="wrap"><p id="footer-text"></p></footer>
+
+<!-- Порядок важен: сначала данные, потом логика, потом интерфейс -->
+<script src="data.js"></script>
+<script src="data-school.js"></script>
+<script src="logic.js"></script>
+<script src="logic-school.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
