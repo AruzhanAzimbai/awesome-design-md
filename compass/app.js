@@ -145,8 +145,7 @@ function renderWelcome() {
       h('h3', {}, t('welcomeWhat')),
       h('ol', { class: 'welcome-steps' }, t('welcomeSteps').map((s) => h('li', {}, s)))),
     h('div', { class: 'btn-row' },
-      h('button', { type: 'button', class: 'btn btn-primary btn-lg', id: 'start-btn', onclick: () => go(state.profile ? 'home' : 'register') }, t('start'))),
-    h('p', { class: 'muted small' }, t('demoNote'))
+      h('button', { type: 'button', class: 'btn btn-primary btn-lg', id: 'start-btn', onclick: () => go(state.profile ? 'home' : 'register') }, t('start')))
   );
 }
 
