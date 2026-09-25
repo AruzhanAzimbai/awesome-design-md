@@ -134,12 +134,67 @@ function renderNav() {
     }, s.num ? h('span', { class: 'tab-num' }, s.num) : null, t(s.label))))));
 }
 
+
+// Лего-фигурка ученицы НИШ (нарисована вручную в SVG, анимация в style.css):
+// тёмно-синий пиджак с белым кантом, зелёный галстук в полоску, длинные тёмные волосы.
+const LEGO_SVG = `<svg class="lego" viewBox="0 0 220 330" role="img" aria-label="Лего-фигурка ученицы НИШ машет рукой">
+  <defs>
+    <pattern id="tie" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <rect width="10" height="10" fill="#1E7A46"/><rect width="10" height="2.4" fill="#E8F0E4"/><rect y="5" width="10" height="1.2" fill="#D9B84A"/>
+    </pattern>
+  </defs>
+  <ellipse class="lego-shadow" cx="110" cy="318" rx="62" ry="8" fill="#12143A" opacity=".14"/>
+  <g class="lego-body">
+    <!-- волосы сзади -->
+    <path d="M58 58 Q58 14 110 12 Q162 14 162 58 L166 170 Q150 184 132 176 L132 96 L88 96 L88 176 Q70 184 54 170 Z" fill="#1A1414"/>
+    <!-- ноги -->
+    <rect x="68" y="236" width="40" height="70" rx="6" fill="#1B2550"/>
+    <rect x="112" y="236" width="40" height="70" rx="6" fill="#1B2550"/>
+    <rect x="64" y="300" width="46" height="12" rx="4" fill="#12143A"/>
+    <rect x="110" y="300" width="46" height="12" rx="4" fill="#12143A"/>
+    <rect x="64" y="226" width="92" height="18" rx="5" fill="#243170"/>
+    <!-- левая рука (опущена) -->
+    <g>
+      <path d="M62 130 L44 136 L34 200 L52 204 Z" fill="#1B2550"/>
+      <path d="M40 200 a13 13 0 1 0 26 4 l-7 -1 a6 6 0 1 1 -12 -2 z" fill="#F4C51B"/>
+    </g>
+    <!-- торс: пиджак -->
+    <path d="M66 126 L154 126 L164 230 L56 230 Z" fill="#1B2550"/>
+    <!-- рубашка и галстук -->
+    <path d="M92 126 L128 126 L110 176 Z" fill="#FFFFFF"/>
+    <path d="M104 132 L116 132 L118 190 L110 202 L102 190 Z" fill="url(#tie)"/>
+    <path d="M103 126 L117 126 L114 134 L106 134 Z" fill="#1E7A46"/>
+    <!-- лацканы с белым кантом -->
+    <path d="M92 126 L110 180 L100 230" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M128 126 L110 180 L120 230" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"/>
+    <circle cx="110" cy="208" r="3.2" fill="#0C1030"/>
+    <!-- правая рука машет -->
+    <g class="lego-arm">
+      <path d="M156 132 L176 128 L196 72 L180 64 Z" fill="#1B2550"/>
+      <circle cx="189" cy="64" r="11" fill="#F4C51B"/><circle cx="191" cy="58" r="4.5" fill="#E9B80F"/>
+    </g>
+    <!-- шея и голова -->
+    <rect x="96" y="112" width="28" height="16" rx="3" fill="#F4C51B"/>
+    <rect x="98" y="16" width="24" height="12" rx="3" fill="#E9B80F"/>
+    <rect x="70" y="26" width="80" height="90" rx="22" fill="#F4C51B"/>
+    <!-- чёлка -->
+    <path d="M66 58 Q70 20 110 20 Q150 20 154 58 Q134 40 110 44 Q86 40 66 58 Z" fill="#1A1414"/>
+    <!-- лицо -->
+    <g class="lego-eyes" fill="#1A1414"><ellipse cx="96" cy="72" rx="4.5" ry="6"/><ellipse cx="124" cy="72" rx="4.5" ry="6"/></g>
+    <circle cx="94.5" cy="70" r="1.4" fill="#fff"/><circle cx="122.5" cy="70" r="1.4" fill="#fff"/>
+    <path d="M94 88 Q110 102 126 88" fill="none" stroke="#1A1414" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="86" cy="88" rx="6" ry="3.5" fill="#F29BA6" opacity=".7"/><ellipse cx="134" cy="88" rx="6" ry="3.5" fill="#F29BA6" opacity=".7"/>
+  </g>
+</svg>`;
+
 // ---------------------------------------------------------------------
 // ПРИВЕТСТВИЕ
 // ---------------------------------------------------------------------
 function renderWelcome() {
   return h('section', { class: 'welcome', 'aria-labelledby': 'hello-h' },
-    h('h2', { class: 'hello-big', id: 'hello-h' }, t('helloBig')),
+    h('div', { class: 'hello-row' },
+      h('h2', { class: 'hello-big', id: 'hello-h' }, t('helloBig')),
+      h('div', { class: 'lego-wrap', html: LEGO_SVG })),
     h('p', { class: 'lead' }, t('welcomeLead')),
     h('div', { class: 'box welcome-box' },
       h('h3', {}, t('welcomeWhat')),

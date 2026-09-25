@@ -30,7 +30,7 @@
   --radius: 10px;
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
 
-  --font-display: 'Unbounded', 'Golos Text', system-ui, sans-serif;
+  --font-display: 'Montserrat', 'Golos Text', system-ui, sans-serif; /* Montserrat: есть все казахские буквы */
   --font-body: 'Golos Text', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 }
@@ -282,11 +282,25 @@ details.review summary { cursor: pointer; font-weight: 600; }
 /* ---------- Приветствие: единственное «громкое» место ---------- */
 .welcome { display: grid; gap: var(--s5); padding-block: var(--s4); }
 .hello-big {
-  font-family: var(--font-display); font-weight: 600; margin: 0;
+  font-family: var(--font-display); font-weight: 800; margin: 0;
   font-size: clamp(2.4rem, 9vw, 4.2rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--purple);
   text-wrap: balance;
 }
 .lead { font-size: 1.15rem; max-width: 56ch; margin: 0; }
+
+/* ---------- Лего-фигурка рядом с приветствием ---------- */
+.hello-row { display: flex; align-items: center; gap: var(--s4); }
+.lego-wrap { flex: none; width: clamp(110px, 26vw, 200px); }
+.lego { width: 100%; height: auto; display: block; overflow: visible; }
+.lego-body { animation: lego-bob 2.4s ease-in-out infinite; transform-origin: 110px 310px; }
+.lego-arm { animation: lego-wave 1.2s ease-in-out infinite; transform-origin: 166px 130px; transform-box: view-box; }
+.lego-eyes { animation: lego-blink 4s infinite; transform-origin: 110px 72px; transform-box: view-box; }
+.lego-shadow { animation: lego-shadow 2.4s ease-in-out infinite; transform-origin: 110px 318px; transform-box: view-box; }
+@keyframes lego-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes lego-wave { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(18deg); } }
+@keyframes lego-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes lego-shadow { 0%, 100% { transform: scaleX(1); opacity: .14; } 50% { transform: scaleX(.85); opacity: .09; } }
+@media (prefers-reduced-motion: reduce) { .lego-body, .lego-arm, .lego-eyes, .lego-shadow { animation: none; } }
 .welcome-box { display: grid; gap: var(--s3); }
 .welcome-steps { margin: 0; padding-left: 1.4em; display: grid; gap: var(--s2); }
 .welcome-steps li::marker { font-family: var(--font-mono); color: var(--purple); font-weight: 700; }
@@ -422,7 +436,8 @@ footer { color: var(--text-2); font-size: 0.85rem; padding-block: 0 var(--s6); }
   .week .slot-title { overflow-wrap: anywhere; }
   main > .panel > .box:has(.reg-form) { max-width: 900px; }
   .welcome { grid-template-columns: 1.1fr 1fr; column-gap: var(--s7); align-items: center; }
-  .welcome .hello-big, .welcome .lead, .welcome .btn-row { grid-column: 1; }
+  .welcome .hello-row, .welcome .lead, .welcome .btn-row { grid-column: 1; }
+  .lego-wrap { width: 230px; }
   .welcome .welcome-box { grid-column: 2; grid-row: 1 / span 3; }
   .route-step { grid-template-columns: 5rem 1fr auto; }
 }
