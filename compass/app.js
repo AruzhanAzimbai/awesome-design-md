@@ -260,6 +260,7 @@ function renderHome() {
       h('h2', { id: 'home-h', class: 'hello' }, tf('hello', { name: p.name })),
       h('p', {}, tf('helloSub', { cls: p.cls })),
       h('button', { type: 'button', class: 'link-btn', onclick: () => { state.draft = Object.assign({}, p); go('register'); } }, t('editProfile'))),
+    h('div', { class: 'home-grid' },
     renderMyDay(),
     h('ol', { class: 'sections' }, SECTIONS.map((s, i) => {
       const st = sectionStatus(s.id);
@@ -271,7 +272,7 @@ function renderHome() {
           h('span', { class: 'sec-state' }, st.done ? chip('closed', st.text) : st.text),
           isNext ? h('span', { class: 'next-tag' }, t('next')) : null),
         h('button', { type: 'button', class: 'btn ' + (isNext ? 'btn-primary' : 'btn-secondary'), onclick: () => go(s.id) }, t('open')));
-    }))
+    })))
   );
 }
 
@@ -471,13 +472,15 @@ function renderFaq() {
     h('div', { class: 'examples' }, h('span', {}, t('examples') + ':'),
       FAQ_EXAMPLES[L()].map((ex) => h('button', { type: 'button', class: 'pill-btn', onclick: () => askQuestion(ex) }, ex))));
 
+  // На широком экране: слева вопрос и ответ, справа история вопросов
+  const main = h('div', { class: 'faq-main' }, h('div', { class: 'box' }, form));
+  if (state.lastQuery) main.append(renderAnswer(state.lastQuery));
+  const grid = h('div', { class: 'faq-grid' }, main);
   const panel = h('section', { class: 'panel', 'aria-labelledby': 'faq-h' },
     h('div', { class: 'panel-head' }, h('h2', { id: 'faq-h' }, t('faqTitle')), h('p', {}, t('faqIntro'))),
-    h('div', { class: 'box' }, form));
+    grid);
 
-  if (state.lastQuery) panel.append(renderAnswer(state.lastQuery));
-
-  panel.append(h('div', { class: 'box stack' },
+  grid.append(h('div', { class: 'box stack faq-history' },
     h('h3', {}, t('history') + ' (' + state.asked.length + ')'),
     state.asked.length === 0 ? h('p', { class: 'muted flush' }, t('historyEmpty')) :
       h('ul', { class: 'history' }, state.asked.map((q) => {
